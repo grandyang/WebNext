@@ -4,20 +4,20 @@ from flask_cors import CORS
 import re
 import subprocess
 import json
-from auction.account import Account
+from backend.account import Account
 from time import time, sleep
 
 
 from algosdk import account, encoding
 from algosdk.logic import get_application_address
-from auction.operations import createAuctionApp, setupAuctionApp, placeBid, closeAuction
-from auction.util import (
+from backend.operations import createAuctionApp, setupAuctionApp, placeBid, closeAuction
+from backend.util import (
     getBalances,
     getAppGlobalState,
     getLastBlockTimestamp,
 )
-from auction.testing.setup import getAlgodClient
-from auction.testing.resources import (
+from backend.testing.setup import getAlgodClient
+from backend.testing.resources import (
     getTemporaryAccount,
     optInToAsset,
     createDummyAsset,
@@ -133,6 +133,8 @@ def simple_auction():
 
 
 app = Flask(__name__)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/accounts')
